@@ -61,6 +61,17 @@ function addRandomPairs(grid: Grid, numPairs?: number): Grid {
   return newGrid;
 }
 
+function makeInitialGrid(
+  numberOfRows: number,
+  numberOfColumns: number,
+  level: number
+): Grid {
+  return addRandomPairs(
+    makeEmptyGrid(numberOfRows, numberOfColumns),
+    3 * level
+  );
+}
+
 /// check whether the grid is empty
 function isWon(grid: Grid): boolean {
   return grid.every((row) => row.every((cell) => isEmpty(cell)));
@@ -78,17 +89,16 @@ function App() {
   );
 
   useEffect(() => {
-    setGrid(
-      addRandomPairs(makeEmptyGrid(numberOfRows, numberOfColumns), 3 * level)
-    );
+    setGrid(makeInitialGrid(numberOfRows, numberOfColumns, level));
   }, [numberOfRows, numberOfColumns, level]);
 
+  // make new pairs appear, faster the higher the level is
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isWon(grid)) {
         setGrid(addRandomPairs(grid, 1));
       }
-    }, 3000 / level); // Faster with higher levels
+    }, 6000 / level); // Faster with higher levels
     return () => clearInterval(interval);
   }, [grid, level]);
 
@@ -182,10 +192,24 @@ function App() {
     </div>
   );
 
+  const MAX_LEVEL = 10;
+  const levels = [];
+  for (let lvl = 1; lvl <= MAX_LEVEL; lvl++) {
+    const stars = "⭐".repeat(lvl);
+    levels.push(<option value={lvl}>{stars}</option>);
+  }
+
   const youWonDiv = (
     <div>
       <h1>🥳</h1>
-      <button onClick={() => setLevel(level + 1)}>↺</button>
+      <button onClick={() => setLevel(level + (level < 10 ? 1 : 0))}>↑</button>
+      <button
+        onClick={() =>
+          setGrid(makeInitialGrid(numberOfRows, numberOfColumns, level))
+        }
+      >
+        ↺
+      </button>
     </div>
   );
 
@@ -198,6 +222,8 @@ function App() {
           id="numberOfRows"
           type="number"
           value={numberOfRows}
+          min={2}
+          max={20}
           onChange={handleChangeRows}
           style={{ width: "4em" }}
         />
@@ -207,6 +233,8 @@ function App() {
           id="numberOfColumns"
           type="number"
           value={numberOfColumns}
+          min={2}
+          max={20}
           onChange={handleChangeColumns}
           style={{ width: "4em" }}
         />
@@ -214,9 +242,7 @@ function App() {
       <div>
         <label htmlFor="level">🤔</label>
         <select id="level" value={level} onChange={handleChangeLevel}>
-          <option value="1">⭐</option>
-          <option value="2">⭐⭐</option>
-          <option value="3">⭐⭐⭐</option>
+          {levels}
         </select>
       </div>
       {isWon(grid) ? youWonDiv : gridDiv}

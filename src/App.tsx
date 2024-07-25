@@ -155,12 +155,18 @@ function App() {
 
   function handleChangeRows(e: React.ChangeEvent<HTMLInputElement>) {
     const rows = parseInt(e.target.value);
-    console.log("Changing rows to", rows);
+    if (isNaN(rows)) {
+      return;
+    }
     setRows(rows);
   }
 
   function handleChangeColumns(e: React.ChangeEvent<HTMLInputElement>) {
-    setColumns(parseInt(e.target.value));
+    const columns = parseInt(e.target.value);
+    if (isNaN(columns)) {
+      return;
+    }
+    setColumns(columns);
   }
 
   function handleChangeLevel(e: React.ChangeEvent<HTMLSelectElement>) {

@@ -42,26 +42,29 @@
 }
 
 .grid {
+  /* grid-template-columns: handled in js/tsx to set number of columns */
+  gap: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Adjust minmax as needed */
-  gap: 10px; /* Adjust the gap size as needed */
+  margin: auto; /* center grid */
+  padding: 10px;
+  width: fit-content;
 }
 
 .cell {
   background-color: #eeffee;
-  width: 50px; /* Adjust the width as needed */
-  height: 50px; /* Adjust the height as needed */
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #ccc; /* Optional: adds a border to each cell */
-  cursor: pointer; /* Optional: changes the cursor on hover */
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 
 .cell-selected {
   background-color: #4CAF50; /* Green background for selected cells */
-  color: white; /* White text color */
-  border: 2px solid #388E3C; /* Darker green border */
+  color: white;
+  /* do not set a border, because then the cell will get slightly bigger which distorts the grid */
 }
 
 .cell-empty {

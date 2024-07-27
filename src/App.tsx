@@ -179,12 +179,15 @@ function App() {
   };
 
   const gridDiv = (
-    <div className="grid">
+    <div
+      className="grid"
+      style={{ gridTemplateColumns: "auto ".repeat(numberOfRows) }}
+    >
       {grid.map((row, rowIndex) => (
-        <div key={rowIndex} className="row">
+        <>
           {row.map((cell, columnIndex) => (
             <div
-              key={columnIndex}
+              key={1000 * rowIndex + columnIndex}
               className={`cell ${
                 isSelected(rowIndex, columnIndex) ? "cell-selected" : ""
               } ${isEmpty(cell) ? "cell-empty" : ""}`}
@@ -193,7 +196,7 @@ function App() {
               {isEmpty(cell) ? "" : cell}
             </div>
           ))}
-        </div>
+        </>
       ))}
     </div>
   );
@@ -221,7 +224,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>3❤️7 &nbsp; 2❤️8 &nbsp; 1❤️9 </h1>
+      <h1>3❤️7</h1>
       <div>
         <label htmlFor="numberOfRows">‖‖</label>
         <input

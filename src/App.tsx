@@ -101,6 +101,15 @@ function App() {
   const [selectedCell, setSelectedCell] = useState<CellIndex | undefined>(
     undefined
   );
+  const [title, setTitle] = useState<string>("");
+
+  // compute title once per game
+  useEffect(() => {
+    const first = Math.floor(Math.random() * 10.99);
+    const second = 10 - first;
+    const LOVES = "❤️";
+    setTitle(first.toString() + LOVES + second.toString());
+  }, []);
 
   useEffect(() => {
     setGrid(makeInitialGrid(numberOfRows, numberOfColumns, level));
@@ -256,7 +265,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>3❤️7</h1>
+      <h1>{title}</h1>
       <div>
         <label htmlFor="numberOfRows">‖‖</label>
         <select

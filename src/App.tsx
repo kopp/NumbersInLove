@@ -153,7 +153,7 @@ function App() {
 
   // Remember to call addRandomPairs in useEffect when the component mounts or level changes
 
-  function handleChangeRows(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeRows(e: React.ChangeEvent<HTMLSelectElement>) {
     const rows = parseInt(e.target.value);
     if (isNaN(rows)) {
       return;
@@ -161,7 +161,7 @@ function App() {
     setRows(rows);
   }
 
-  function handleChangeColumns(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeColumns(e: React.ChangeEvent<HTMLSelectElement>) {
     const columns = parseInt(e.target.value);
     if (isNaN(columns)) {
       return;
@@ -202,10 +202,22 @@ function App() {
   );
 
   const MAX_LEVEL = 10;
-  const levels = [];
+  const levelChoices = [];
   for (let lvl = 1; lvl <= MAX_LEVEL; lvl++) {
     const stars = "⭐".repeat(lvl);
-    levels.push(<option value={lvl}>{stars}</option>);
+    levelChoices.push(<option value={lvl}>{stars}</option>);
+  }
+
+  const MAX_ROWS = 20;
+  const rowChoices = [];
+  for (let row = 3; row <= MAX_ROWS; row++) {
+    rowChoices.push(<option value={row}>{row}</option>);
+  }
+
+  const MAX_COLUMNS = 14;
+  const columnChoices = [];
+  for (let column = 3; column <= MAX_COLUMNS; column++) {
+    columnChoices.push(<option value={column}>{column}</option>);
   }
 
   const youWonDiv = (
@@ -229,31 +241,29 @@ function App() {
       <h1>3❤️7</h1>
       <div>
         <label htmlFor="numberOfRows">‖‖</label>
-        <input
+        <select
           id="numberOfRows"
-          type="number"
           value={numberOfRows}
-          min={2}
-          max={20}
           onChange={handleChangeRows}
           style={{ width: "4em" }}
-        />
+        >
+          {rowChoices}
+        </select>
         &nbsp; &nbsp;
         <label htmlFor="numberOfColumns">☰</label>
-        <input
+        <select
           id="numberOfColumns"
-          type="number"
           value={numberOfColumns}
-          min={2}
-          max={20}
           onChange={handleChangeColumns}
           style={{ width: "4em" }}
-        />
+        >
+          {columnChoices}
+        </select>
       </div>
       <div>
         <label htmlFor="level">🤔</label>
         <select id="level" value={level} onChange={handleChangeLevel}>
-          {levels}
+          {levelChoices}
         </select>
       </div>
       {isWon(grid) ? youWonDiv : gridDiv}

@@ -141,6 +141,10 @@ function App() {
       return;
     }
     const secondValue = grid[row][column];
+    if (secondValue == null) {
+      console.error("Value at", row, column, "was", grid[row][column]);
+      return;
+    }
 
     if (firstValue + secondValue === 10) {
       const newGrid = [...grid];

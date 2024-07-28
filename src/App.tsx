@@ -211,7 +211,9 @@ function App() {
   const youWonDiv = (
     <div>
       <h1>🥳</h1>
-      <button onClick={() => setLevel(level + (level < 10 ? 1 : 0))}>↑</button>
+      <button onClick={() => setLevel(level + (level < MAX_LEVEL ? 1 : 0))}>
+        ↑⭐
+      </button>
       <button
         onClick={() =>
           setGrid(makeInitialGrid(numberOfRows, numberOfColumns, level))

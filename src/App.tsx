@@ -66,9 +66,23 @@ function makeInitialGrid(
   numberOfColumns: number,
   level: number
 ): Grid {
+  const fraction: number = (() => {
+    switch (level) {
+      case 1:
+        return 0.7;
+      case 2:
+        return 0.7;
+      case 3:
+        return 0.8;
+      case 4:
+        return 0.8;
+      default:
+        return 1;
+    }
+  })();
   return addRandomPairs(
     makeEmptyGrid(numberOfRows, numberOfColumns),
-    3 * level
+    Math.floor((fraction * numberOfColumns * numberOfRows) / 2)
   );
 }
 
